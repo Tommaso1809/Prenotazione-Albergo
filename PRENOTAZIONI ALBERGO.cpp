@@ -1,10 +1,9 @@
 #include<iostream>
 #include<cstdlib>
 #include<ctime>
+#define DIM 12
+#define TARIFFA 10
 using namespace std;
-
-
-
 
 //Prototipi Funzioni
 int menu();
@@ -18,22 +17,24 @@ void controllo(int);
 int moltiplicatore(int[],int);
 
 //Variabili Globali
-int scelta,cnt=0,index=0,prezzo,molti;  //molti=moltipilicatore
-const int TARIFFA=10;
-const int DIM=12;
-int ID[DIM],mese[DIM],ospiti[DIM],costo[DIM],notti[DIM],stanze[DIM],eliminate[DIM];
-int m,o,c,n,s,i;
+int scelta,cnt=0,index=0,nDisponibili=0,m,o,c,n,s,i;  
+bool scl;
+int ID[DIM],mese[DIM],ospiti[DIM],costo[DIM],notti[DIM],stanze[DIM],liberi[DIM];
 
 //Main
 int main(){
 	
 	srand(time(NULL));
 	
-	while(scelta!=7){
+	do{
 		
 		scelta=menu();
 		controllo(scelta);
-	}
+		
+		cout<<"Vuoi continuare 1|0 ?"<<endl;
+		cin>>scl;
+		
+	}while(scl);
 	
   return 0;	
 }
@@ -42,15 +43,17 @@ int menu(){
 	
 	int s;
 	
-	cout<<"1 PER INSERIRE PRENOTAZIONE"<<endl;
-	cout<<"2 PER VISUALIZZARE PRENOTAZIONE"<<endl;
-	cout<<"3 PER RICERCARE PRENOTAZIONE"<<endl;
-	cout<<"4 PER MODIFICARE PRENOTAZIONE"<<endl;
-	cout<<"5 PER CANCELLARE PRENOTAZIONE"<<endl;
-	cout<<"6 PER RICERCARE POSTI LIBERI"<<endl;
-	cout<<"7 PER USCIRE ------>        "<<endl;
+	cout<<"****PRENOTAZIONI ALBERGO *****"<<endl;
+	cout<<"*1 INSERIRE PRENOTAZIONE     *"<<endl;
+	cout<<"*2 VISUALIZZARE PRENOTAZIONE *"<<endl;
+	cout<<"*3 RICERCARE PRENOTAZIONE    *"<<endl;
+	cout<<"*4 MODIFICARE PRENOTAZIONE   *"<<endl;
+	cout<<"*5 CANCELLARE PRENOTAZIONE   *"<<endl;
+	cout<<"*6 RICERCARE POSTI LIBERI    *"<<endl;
+	cout<<"*7 PER USCIRE ------>        *"<<endl;
+	cout<<"******************************"<<endl;
 	cout<<endl;
-	cout<<"INSERIRE LA TUA SCELTA"<<endl;
+	cout<<"INSERIRE LA TUA SCELTA 1|7"<<endl;
 	cin>>s;
 	
 	return s;
@@ -76,10 +79,6 @@ void riempi(){
 	
 	cnt++;
 	
-	molti=moltiplicatore(mese,cnt);
-	
-	costo[cnt]=TARIFFA*notti[cnt]*molti;
-	
 }
 
 void visualizza(){
@@ -87,13 +86,16 @@ void visualizza(){
 	
 	for( int i=0;i<cnt;i++){
 		
-		cout<<"ID PRENOTAZIONE "<<ID[i]<<endl;
-		cout<<"MESE :"<<mese[i]<<endl;
-		cout<<"NOTTI :"<<notti[i]<<endl;
-		cout<<"OSPITI: "<<ospiti[i]<<endl;
-		cout<<"STANZA :"<<stanze[i]<<endl;
-		cout<<endl;
-		cout<<"COSTO DEL SOGGIORNO :"<<costo[i]<<endl;
+		if(stanze[i]!=-2){
+		
+		
+			cout<<"ID PRENOTAZIONE "<<ID[i]<<endl;
+			cout<<"MESE :"<<mese[i]<<endl;
+			cout<<"NOTTI :"<<notti[i]<<endl;
+			cout<<"OSPITI: "<<ospiti[i]<<endl;
+			cout<<"STANZA :"<<stanze[i]<<endl;
+			cout<<endl;
+		}
 	}
 }
 
@@ -163,8 +165,9 @@ void  modifica(){
 void cancella(){
 	
 	int modified;
+
 	
-	cout<<"INSERISCI L'INDICE DELLA PRENOTAZIONE DA MODIFICARE"<<endl;
+	cout<<"INSERISCI L'INDICE DELLA PRENOTAZIONE DA CANCELLARE"<<endl;
 	cin>>modified;
 	
 	
@@ -173,8 +176,9 @@ void cancella(){
 		
 		if(modified==ID[k]){
 			
-				
-			eliminate[index]=cnt;
+			liberi[nDisponibili]=stanze[k];
+			nDisponibili++;
+			
 			mese[k]=0;
 			notti[k]=0;		//Inizializzo a 0 i vettori di quell'indice
 			stanze[k]=-2;		//Ho assengnato -2 alla stanza per far si che quando vado alla ricerca dei posti liberi dica che quella stanza è vuota
@@ -183,41 +187,23 @@ void cancella(){
 			break;	
 			
 		}
-		
 	}
-
-
-	
-
 		
-	
-		
-
-	
-				
 }
+
+
 
 void ricerca_posti(){
 	
+	cout<<"Posti Liberi "<<endl;
 	
-	int nDisponibili=0;
-	int nonDisponibili=0;
-	
-	for(int i=0;i<=DIM;i++){
+	for(int i=0;i<nDisponibili;i++){
 		
-		if(stanze[i]==-2){
-			
-			nDisponibili++;
-			
-		}
-		else{
-			
-			nonDisponibili++;
-		}
+		cout<<liberi[i]<<"\t";
 	}
+	cout<<endl;
 	
-	cout<<"Sono disponibili "<<nDisponibili<<" posti"<<endl;
-	cout<<"Non sono disponibili "<<nonDisponibili<<" posti"<<endl;
+	
 }
 		
 	
@@ -275,8 +261,12 @@ void controllo(int scelta){
 			system("CLS");
 		break;
 		
-		default:
-			cout<<"USCITA EFFETTUATA"<<endl;						
+		case 7:
+			
+			abort();
+			
+		break;	
+								
 	}
 	
 }
