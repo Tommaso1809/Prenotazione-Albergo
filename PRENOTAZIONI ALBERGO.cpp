@@ -1,13 +1,18 @@
 #include<iostream>
+#include<cstdlib>
+#include<ctime>
 using namespace std;
+
+
+
 
 //Prototipi Funzioni
 int menu();
 void riempi();
 void visualizza();
-void ricerca();
-int modifica(int);
-int cancella(int);
+void ricerca(int);
+void modifica();
+void cancella();
 void ricerca_posti();
 void controllo(int);
 int moltiplicatore(int[],int);
@@ -17,9 +22,12 @@ int scelta,cnt=0,index=0,prezzo,molti;  //molti=moltipilicatore
 const int TARIFFA=10;
 const int DIM=12;
 int ID[DIM],mese[DIM],ospiti[DIM],costo[DIM],notti[DIM],stanze[DIM],eliminate[DIM];
+int m,o,c,n,s,i;
 
 //Main
 int main(){
+	
+	srand(time(NULL));
 	
 	while(scelta!=7){
 		
@@ -51,15 +59,22 @@ int menu(){
 void riempi(){
 	
 	cout<<"Inserisci il mese"<<endl;
-	cin>>mese[cnt];
+	cin>>m;
+	mese[cnt]=m;
 	cout<<"Inserisci il numero delle notti"<<endl;
-	cin>>notti[cnt];
+	cin>>n;
+	notti[cnt]=n;
 	cout<<"Inserisci il numero degli ospiti"<<endl;
-	cin>>ospiti[cnt];
+	cin>>o;
+	ospiti[cnt]=o;
 	cout<<"Inserisci il numero della stanza"<<endl;
-	cin>>stanze[cnt];
-	cout<<"Inserisci L'ID d'associare alla prenotazione"<<endl;
-	cin>>ID[cnt];
+	cin>>s;
+	stanze[cnt]=s;
+	
+	i=rand()%1000+1;
+	ID[cnt]=i;
+	
+	cnt++;
 	
 	molti=moltiplicatore(mese,cnt);
 	
@@ -82,71 +97,127 @@ void visualizza(){
 	}
 }
 
-void ricerca(){
+void ricerca(int i){
 	
-	cout<<"INSERIRE IL NUMERO DELLA PRENOTAZIONE"<<endl;
-	cin>>index;
+	
 	
 	for(int k=0;k<DIM;k++){
 		
-		if(index==ID[k]){
+		if(i==ID[k]){
 			
 			cout<<"PRENOTAZIONE TROVATA"<<endl;
-			cout<<"ID PRENOTAZIONE "<<ID[index]<<endl;
-			cout<<"MESE :"<<mese[index]<<endl;
-			cout<<"NOTTI :"<<notti[index]<<endl;
-			cout<<"OSPITI: "<<ospiti[index]<<endl;
-			cout<<"STANZA :"<<stanze[index]<<endl;
+			cout<<"ID PRENOTAZIONE "<<ID[k]<<endl;
+			cout<<"MESE :"<<mese[k]<<endl;
+			cout<<"NOTTI :"<<notti[k]<<endl;
+			cout<<"OSPITI: "<<ospiti[k]<<endl;
+			cout<<"STANZA :"<<stanze[k]<<endl;
 			cout<<endl;
-			cout<<"COSTO DEL SOGGIORNO"<<costo[index]<<endl;
+			cout<<"COSTO DEL SOGGIORNO"<<costo[k]<<endl;
 			
+
 			break;
-		}			
-	}	
+		}
+		else	
+			cout<<"Prenotazione Inesistente"<<endl;			
+	}
+	
+	
 }
 
-int modifica(int cnt){
+void  modifica(){
+	
+	int modified;
 	
 	cout<<"INSERISCI L'INDICE DELLA PRENOTAZIONE DA MODIFICARE"<<endl;
-	cin>>cnt;
+	cin>>modified;
 	
-	cout<<"Inserisci il mese"<<endl;
-	cin>>mese[cnt];
-	cout<<"Inserisci il numero delle notti"<<endl;
-	cin>>notti[cnt];
-	cout<<"Inserisci il numero degli ospiti"<<endl;
-	cin>>ospiti[cnt];
-	cout<<"Inserisci il numero della stanza"<<endl;
-	cin>>stanze[cnt];
-	cout<<"Inserisci L'ID d'associare alla prenotazione"<<endl;
-	cin>>ID[cnt];
 	
+	for(int k=0;k<DIM;k++){
+		
+		
+		if(modified==ID[k]){
+			
+				
+			cout<<"Inserisci il mese"<<endl;
+			cin>>m;
+			mese[k]=m;
+			cout<<"Inserisci il numero delle notti"<<endl;
+			cin>>n;
+			notti[k]=n;
+			cout<<"Inserisci il numero degli ospiti"<<endl;
+			cin>>o;
+			ospiti[k]=o;
+			cout<<"Inserisci il numero della stanza"<<endl;
+			cin>>s;
+			stanze[k]=s;
+				
+			break;	
+			
+		}
+		
+	}
+	
+		
 }
 
-int cancella(int cnt){
+void cancella(){
 	
-	cout<<"INSERISCI L'INDICE DELLA PRENOTAZIONE DA CANCELLARE"<<endl;
-	cin>>cnt;
+	int modified;
 	
-	eliminate[index]=cnt;
-	mese[cnt]=0;
-	notti[cnt]=0;		//Inizializzo a 0 i vettori di quell'indice
-	stanze[cnt]=-2;		//Ho assengnato -2 alla stanza per far si che quando vado alla ricerca dei posti liberi dica che quella stanza è vuota
-	ospiti[cnt]=0;			
+	cout<<"INSERISCI L'INDICE DELLA PRENOTAZIONE DA MODIFICARE"<<endl;
+	cin>>modified;
+	
+	
+	for(int k=0;k<DIM;k++){
+		
+		
+		if(modified==ID[k]){
+			
+				
+			eliminate[index]=cnt;
+			mese[k]=0;
+			notti[k]=0;		//Inizializzo a 0 i vettori di quell'indice
+			stanze[k]=-2;		//Ho assengnato -2 alla stanza per far si che quando vado alla ricerca dei posti liberi dica che quella stanza è vuota
+			ospiti[k]=0;
+				
+			break;	
+			
+		}
+		
+	}
+
+
+	
+
+		
+	
+		
+
+	
+				
 }
 
 void ricerca_posti(){
 	
 	
+	int nDisponibili=0;
+	int nonDisponibili=0;
+	
 	for(int i=0;i<=DIM;i++){
 		
-		if((ID[i]==0)||(stanze[i]==-2)){
+		if(stanze[i]==-2){
 			
-			cout<<"POSTO "<<i<< " DISPONIBILE "<<endl;
-
+			nDisponibili++;
+			
 		}
-		cout<<"POSTO "<<i<< "NON DISPONIBILE"<<endl;
+		else{
+			
+			nonDisponibili++;
+		}
 	}
+	
+	cout<<"Sono disponibili "<<nDisponibili<<" posti"<<endl;
+	cout<<"Non sono disponibili "<<nonDisponibili<<" posti"<<endl;
 }
 		
 	
@@ -157,7 +228,6 @@ void controllo(int scelta){
 		
 		case 1:
 			riempi();
-			cnt++;	
 			system("PAUSE");
 			system("CLS");
 		break;
@@ -170,21 +240,29 @@ void controllo(int scelta){
 		break;
 		
 		case 3:
-			ricerca();
+			
+			int id,indice;
+			
+			cout<<"Inserire l'Id da ricercare"<<endl;
+			cin>>id;
+			
+			ricerca(id);
+			
+			
 			
 			system("PAUSE");
 			system("CLS");
 		break;
 		
 		case 4:
-			modifica(cnt);
+			modifica();
 			
 			system("PAUSE");
 			system("CLS");
 		break;
 		
 		case 5:
-			cancella(cnt);
+			cancella();
 			
 			system("PAUSE");
 			system("CLS");
