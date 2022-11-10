@@ -14,7 +14,7 @@ void modifica();
 void cancella();
 void ricerca_posti();
 void controllo(int);
-int moltiplicatore(int[],int);
+
 
 //Variabili Globali
 int scelta,cnt=0,index=0,nDisponibili=0,m,o,c,n,s,i;  
@@ -269,64 +269,6 @@ void controllo(int scelta){
 								
 	}
 	
-}
-
-int moltiplicatore(int mese[],int cnt){		//Casistiche del moltiplicatore
-	
-	int m;
-	
-	switch(mese[cnt]){
-		
-		case 1:
-			m=2;
-		break;
-		
-		case 2:
-			m=3;
-		break;
-		
-		case 3:
-			m=4;
-		break;
-		
-		case 4:
-			m=5;
-		break;
-		
-		case 5:
-			m=7;
-		break;
-		
-		case 6:
-			m=9;
-		break;
-		
-		case 7:
-			m=12;
-		break;
-		
-		case 8:
-			m=15;
-		break;
-		
-		case 9:
-			m=14;
-		break;
-		
-		case 10:
-			m=5;
-		break;
-		
-		case 11:
-			m=3;
-		break;
-		
-		case 12:
-			m=1;
-		break;												
-	}
-	
-	return m;
 }
 
 
