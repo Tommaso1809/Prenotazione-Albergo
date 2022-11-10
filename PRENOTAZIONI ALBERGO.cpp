@@ -1,8 +1,10 @@
 #include<iostream>
 #include<cstdlib>
 #include<ctime>
-#define DIM 12
-#define TARIFFA 10
+#include<string>
+#define DIM 1000
+#define TARIFFA 100
+
 using namespace std;
 
 //Prototipi Funzioni
@@ -17,9 +19,11 @@ void controllo(int);
 
 
 //Variabili Globali
-int scelta,cnt=0,index=0,nDisponibili=0,m,o,c,n,s,i;  
+int scelta,cnt=0,index=0,nDisponibili=0,o,c,n,s,i;  
 bool scl;
-int ID[DIM],mese[DIM],ospiti[DIM],costo[DIM],notti[DIM],stanze[DIM],liberi[DIM];
+int ID[DIM],ospiti[DIM],notti[DIM],stanze[DIM],liberi[DIM];
+double prezzi[DIM],p;
+string mese[DIM],m;
 
 //Main
 int main(){
@@ -61,23 +65,35 @@ int menu(){
 
 void riempi(){
 	
-	cout<<"Inserisci il mese"<<endl;
-	cin>>m;
-	mese[cnt]=m;
-	cout<<"Inserisci il numero delle notti"<<endl;
-	cin>>n;
-	notti[cnt]=n;
-	cout<<"Inserisci il numero degli ospiti"<<endl;
-	cin>>o;
-	ospiti[cnt]=o;
-	cout<<"Inserisci il numero della stanza"<<endl;
-	cin>>s;
-	stanze[cnt]=s;
+	if(cnt==DIM){
+		
+		cout<<"Albergo Pieno"<<endl;
+		
+	}
+	else{
 	
-	i=rand()%1000+1;
-	ID[cnt]=i;
 	
-	cnt++;
+		cout<<"Inserisci il mese"<<endl;
+		cin>>m;
+		mese[cnt]=m;
+		cout<<"Inserisci il numero delle notti"<<endl;
+		cin>>n;
+		notti[cnt]=n;
+		cout<<"Inserisci il numero degli ospiti"<<endl;
+		cin>>o;
+		ospiti[cnt]=o;
+		cout<<"Inserisci il numero della stanza"<<endl;
+		cin>>s;
+		stanze[cnt]=s;
+		
+		i=rand()%1000+1;
+		ID[cnt]=i;
+		
+		p=(TARIFFA*notti[cnt]);
+		prezzi[cnt]=p;
+		
+		cnt++;
+	}
 	
 }
 
@@ -95,6 +111,8 @@ void visualizza(){
 			cout<<"OSPITI: "<<ospiti[i]<<endl;
 			cout<<"STANZA :"<<stanze[i]<<endl;
 			cout<<endl;
+			cout<<"PREZZO: "<<prezzi[i]<<" euro"<<endl;
+			cout<<endl;
 		}
 	}
 }
@@ -106,21 +124,22 @@ void ricerca(int i){
 	for(int k=0;k<DIM;k++){
 		
 		if(i==ID[k]){
+		
 			
 			cout<<"PRENOTAZIONE TROVATA"<<endl;
+			cout<<"--------------------"<<endl;
 			cout<<"ID PRENOTAZIONE "<<ID[k]<<endl;
 			cout<<"MESE :"<<mese[k]<<endl;
 			cout<<"NOTTI :"<<notti[k]<<endl;
 			cout<<"OSPITI: "<<ospiti[k]<<endl;
 			cout<<"STANZA :"<<stanze[k]<<endl;
 			cout<<endl;
-			cout<<"COSTO DEL SOGGIORNO"<<costo[k]<<endl;
-			
+			cout<<"PREZZO: "<<prezzi[i]<<" euro"<<endl;
+			cout<<endl;
 
 			break;
-		}
-		else	
-			cout<<"Prenotazione Inesistente"<<endl;			
+		}	
+		
 	}
 	
 	
@@ -152,6 +171,12 @@ void  modifica(){
 			cout<<"Inserisci il numero della stanza"<<endl;
 			cin>>s;
 			stanze[k]=s;
+			
+			p=(TARIFFA*notti[cnt]);
+			prezzi[cnt]=p;
+			
+			cout<<"Modifica Effettuata"<<endl;
+			cout<<"\n";	
 				
 			break;	
 			
@@ -179,11 +204,13 @@ void cancella(){
 			liberi[nDisponibili]=stanze[k];
 			nDisponibili++;
 			
-			mese[k]=0;
+			mese[k]="";
 			notti[k]=0;		//Inizializzo a 0 i vettori di quell'indice
 			stanze[k]=-2;		//Ho assengnato -2 alla stanza per far si che quando vado alla ricerca dei posti liberi dica che quella stanza è vuota
 			ospiti[k]=0;
 				
+			cout<<"Cancellazione Effettuata"<<endl;
+			cout<<"\n";	
 			break;	
 			
 		}
