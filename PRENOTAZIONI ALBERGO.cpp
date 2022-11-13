@@ -3,7 +3,7 @@
 #include<ctime>
 #include<string>
 #define DIM 1000
-#define TARIFFA 100
+#define TARIFFA 150
 
 using namespace std;
 
@@ -39,6 +39,8 @@ int main(){
 		cin>>scl;
 		
 	}while(scl);
+
+	
 	
   return 0;	
 }
@@ -47,7 +49,7 @@ int menu(){
 	
 	int s;
 	
-	cout<<"****PRENOTAZIONI ALBERGO *****"<<endl;
+	cout<<"****GESTIONALE  ALBERGO *****"<<endl;
 	cout<<"*1 INSERIRE PRENOTAZIONE     *"<<endl;
 	cout<<"*2 VISUALIZZARE PRENOTAZIONE *"<<endl;
 	cout<<"*3 RICERCARE PRENOTAZIONE    *"<<endl;
@@ -206,7 +208,7 @@ void cancella(){
 			
 			mese[k]="";
 			notti[k]=0;		//Inizializzo a 0 i vettori di quell'indice
-			stanze[k]=-2;		//Ho assengnato -2 alla stanza per far si che quando vado alla ricerca dei posti liberi dica che quella stanza è vuota
+			stanze[k]=-2;		//Ho assengnato -2 alla stanza per far si che quando vado alla ricerca dei posti liberi dica che quella stanza ï¿½ vuota
 			ospiti[k]=0;
 				
 			cout<<"Cancellazione Effettuata"<<endl;
@@ -222,7 +224,7 @@ void cancella(){
 
 void ricerca_posti(){
 	
-	cout<<"Posti Liberi "<<endl;
+	cout<<"Posti Liberi "<<nDisponibili<<endl;
 	
 	for(int i=0;i<nDisponibili;i++){
 		
@@ -290,9 +292,14 @@ void controllo(int scelta){
 		
 		case 7:
 			
+			cout<<"PROGRAMMA TERMINATO"<<endl;
 			abort();
 			
 		break;	
+
+		default:
+
+			cout<<"Opzione non Dispnibile"<<endl;
 								
 	}
 	
